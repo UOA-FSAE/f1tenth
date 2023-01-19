@@ -5,12 +5,13 @@
     <xacro:include filename="$(find f1tenth_description)/urdf/const.xacro" />
     <xacro:include filename="$(find f1tenth_description)/urdf/macro.xacro" />
 
-    <xacro:property name="sizes_yaml_file" value="$(find f1tenth_description)/config/sizes.xacro" />
-    <xacro:property name="sizes" value="${load_yaml(sizes_yaml_file)}" />
+<!--    <xacro:property name="sizes_yaml_file" value="$(find f1tenth_description)/config/sizes.xacro" />-->
+<!--    <xacro:property name="sizes" value="${load_yaml(sizes_yaml_file)}" />-->
 
-    <!-- -->
+    <!-- links and joints -->
+    <xacro:include filename="$(find f1tenth_description)/urdf/links.xacro" />
 
     <!-- Gazebo stuff -->
-    <xacro:include filename="$(find f1tenth_description)/gazebo/ackermann.gazebo.xacro" />
+<!--    <xacro:include filename="$(find f1tenth_description)/gazebo/ackermann.gazebo.xacro" />-->
 
 </robot>

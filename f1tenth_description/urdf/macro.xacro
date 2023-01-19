@@ -54,16 +54,16 @@
         <origin xyz="0 0 0" rpy="0 0 0"/>
     <xacro:wheel />
     ```
+
+    There is a no mesh option it's called cylinder_link_nomesh that has the same params just with no mesh.
     -->
 
     <xacro:macro name="cylinder_link" params="name mesh_file radius width mass *origin">
         <link name="${name}">
-            <!-- Be careful when creating links that you want in gazebo bc you need to have
-             a visual, collision and an inertial component to the link -->
 
             <visual>
                 <geometry>
-                    <mesh filename="mesh_file"/>
+                    <mesh filename="${mesh_file}"/>
                 </geometry>
 
                 <xacro:insert_block name="origin" />
@@ -71,7 +71,32 @@
 
             <collision>
                 <geometry>
-                    <mesh filename="mesh_file"/>
+                    <mesh filename="${mesh_file}"/>
+                </geometry>
+
+                <xacro:insert_block name="origin" />
+            </collision>
+
+            <xacro:inertial_cylinder mass="${mass}" length="${width}" radius="${radius}">
+                <xacro:insert_block name="origin" />
+            </xacro:inertial_cylinder>
+        </link>
+    </xacro:macro>
+
+    <xacro:macro name="cylinder_link_nomesh" params="name radius width mass *origin">
+        <link name="${name}">
+
+            <visual>
+                <geometry>
+                    <cylinder length="${width}" radius="${radius}" />
+                </geometry>
+
+                <xacro:insert_block name="origin" />
+            </visual>
+
+            <collision>
+                <geometry>
+                    <cylinder length="${width}" radius="${radius}" />
                 </geometry>
 
                 <xacro:insert_block name="origin" />
@@ -112,7 +137,7 @@
         <link name="${name}">
             <visual>
                 <geometry>
-                    <mesh filename="mesh_file"/>
+                    <mesh filename="${mesh_file}"/>
                 </geometry>
 
                 <xacro:insert_block name="origin" />
@@ -120,7 +145,7 @@
 
             <collision>
                 <geometry>
-                    <mesh filename="mesh_file"/>
+                    <mesh filename="${mesh_file}"/>
                 </geometry>
 
                 <xacro:insert_block name="origin" />
