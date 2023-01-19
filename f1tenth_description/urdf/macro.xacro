@@ -1,0 +1,82 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <xacro:macro name="inertial_sphere" params="mass radius *origin">
+        <inertial>
+            <xacro:insert_block name="origin"/>
+            <mass value="${mass}" />
+            <inertia ixx="${(2/5) * mass * (radius*radius)}" ixy="0.0" ixz="0.0"
+                    iyy="${(2/5) * mass * (radius*radius)}" iyz="0.0"
+                    izz="${(2/5) * mass * (radius*radius)}" />
+        </inertial>
+    </xacro:macro>
+
+    <xacro:macro name="inertial_box" params="mass x y z *origin">
+        <inertial>
+            <xacro:insert_block name="origin"/>
+            <mass value="${mass}" />
+            <inertia ixx="${(1/12) * mass * (y*y+z*z)}" ixy="0.0" ixz="0.0"
+                    iyy="${(1/12) * mass * (x*x+z*z)}" iyz="0.0"
+                    izz="${(1/12) * mass * (x*x+y*y)}" />
+        </inertial>
+    </xacro:macro>
+
+    <xacro:macro name="inertial_cylinder" params="mass length radius *origin">
+        <inertial>
+            <xacro:insert_block name="origin"/>
+            <mass value="${mass}" />
+            <inertia ixx="${(1/12) * mass * (3*radius*radius + length*length)}" ixy="0.0" ixz="0.0"
+                    iyy="${(1/12) * mass * (3*radius*radius + length*length)}" iyz="0.0"
+                    izz="${(1/2) * mass * (radius*radius)}" />
+        </inertial>
+    </xacro:macro>
+
+    <xacro:macro name="wheel" params="name mesh_file radius width mass colour *origin">
+        <link name="${name}">
+            <visual>
+                <geometry>
+                    <mesh filename="mesh_file"/>
+                </geometry>
+
+                <xacro:insert_block name="origin" />
+            </visual>
+
+            <collision>
+                <geometry>
+                    <mesh filename="mesh_file"/>
+                </geometry>
+
+                <xacro:insert_block name="origin" />
+            </collision>
+
+            <xacro:inertial_cylinder mass="${mass}" length="${width}" radius="${radius}">
+                <xacro:insert_block name="origin" />
+            </xacro:inertial_cylinder>
+        </link>
+    </xacro:macro>
+
+    <xacro:macro name="chassis_part" params="name mesh_file mass x y z *origin" >
+        <link name="${name}">
+            <visual>
+                <geometry>
+                    <mesh filename="mesh_file"/>
+                </geometry>
+
+                <xacro:insert_block name="origin" />
+            </visual>
+
+            <collision>
+                <geometry>
+                    <mesh filename="mesh_file"/>
+                </geometry>
+
+                <xacro:insert_block name="origin" />
+            </collision>
+
+            <xacro:inertial_box mass="${mass}" x="${x}" y="${y}" z="${z}">
+                <xacro:insert_block name="origin" />
+            </xacro:inertial_box>
+        </link>
+    </xacro:macro>
+
+</robot>

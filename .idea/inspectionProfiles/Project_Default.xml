@@ -1,0 +1,19 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="DuplicatedCode" enabled="true" level="WEAK WARNING" enabled_by_default="true">
+      <Languages>
+        <language minSize="131" name="Python" />
+      </Languages>
+    </inspection_tool>
+    <inspection_tool class="PyUnresolvedReferencesInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredIdentifiers">
+        <list>
+          <option value="src.driver.driver.env_data_service_node.*" />
+          <option value="src.driver.driver.agent_env_node.*" />
+          <option value="ros_gz_interfaces.srv._control_world.ControlWorld.Request" />
+        </list>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>
