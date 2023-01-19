@@ -31,7 +31,7 @@
         </inertial>
     </xacro:macro>
 
-    <xacro:macro name="wheel" params="name mesh_file radius width mass colour *origin">
+    <xacro:macro name="wheel" params="name mesh_file radius width mass *origin">
         <link name="${name}">
             <visual>
                 <geometry>
