@@ -3,8 +3,8 @@
 
     <!-- Steering joints -->
     <joint name="front_left_wheel_steering_joint" type="revolute">
-        <child>front_left_wheel_steering_link</child>
-        <parent>base_link</parent>
+        <child link="front_left_wheel_steering_link" />
+        <parent link="base_link" />
 
         <axis xyz="0 0 1" />
         <limit lower="-0.6" upper="+0.6"
@@ -12,8 +12,8 @@
     </joint>
 
     <joint name="front_right_wheel_steering_joint" type="revolute">
-        <child>front_right_wheel_steering_link</child>
-        <parent>base_link</parent>
+        <child link="front_right_wheel_steering_link" />
+        <parent link="base_link" />
 
         <axis xyz="0 0 1" />
         <limit lower="-0.6" upper="+0.6"
@@ -22,30 +22,30 @@
 
     <!-- Drive joints -->
     <joint name="front_left_wheel_joint" type="continuous">
-        <child>front_left_wheel</child>
-        <parent>front_left_wheel_steering_link</parent>
+        <child link="front_left_wheel" />
+        <parent link="front_left_wheel_steering_link" />
 
         <axis xyz="0 0 1" />
     </joint>
 
     <joint name="front_right_wheel_joint" type="continuous">
-        <child>front_right_wheel</child>
-        <parent>front_right_wheel_steering_link</parent>
+        <child link="front_right_wheel" />
+        <parent link="front_right_wheel_steering_link" />
 
         <axis xyz="0 0 1" />
     </joint>
 
 
     <joint name="rear_left_wheel_joint" type="continuous">
-        <child>rear_left_wheel</child>
-        <parent>base_link</parent>
+        <child link="rear_left_wheel" />
+        <parent link="base_link" />
 
         <axis xyz="0 0 1" />
     </joint>
 
     <joint name="rear_right_wheel_joint" type="continuous">
-        <child>rear_right_wheel</child>
-        <parent>base_link</parent>
+        <child link="rear_right_wheel" />
+        <parent link="base_link" />
 
         <axis xyz="0 0 1" />
     </joint>
