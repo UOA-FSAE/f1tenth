@@ -6,22 +6,22 @@
     <!-- Wheels -->
     <xacro:cylinder_link name="front_left_wheel" mesh_file="package://f1tenth_description/meshes/wheel.stl"
                  radius="0.055" width="0.0445" mass="0.09">
-        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="${-pi/2} 0 0"/>
     </xacro:cylinder_link>
 
     <xacro:cylinder_link name="front_right_wheel" mesh_file="package://f1tenth_description/meshes/wheel.stl"
                  radius="0.055" width="0.0445" mass="0.09">
-        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="${pi/2} 0 0"/>
     </xacro:cylinder_link>
 
     <xacro:cylinder_link name="rear_left_wheel" mesh_file="package://f1tenth_description/meshes/wheel.stl"
                  radius="0.055" width="0.0445" mass="0.09">
-        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="${-pi/2} 0 0"/>
     </xacro:cylinder_link>
 
     <xacro:cylinder_link name="rear_right_wheel" mesh_file="package://f1tenth_description/meshes/wheel.stl"
                  radius="0.055" width="0.0445" mass="0.09">
-        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="${pi/2} 0 0"/>
     </xacro:cylinder_link>
 
     <!-- Drive train -->
@@ -36,9 +36,9 @@
     </xacro:cylinder_link_nomesh>
 
     <!-- Chassis -->
-<!--    <xacro:box_link name="lower_chassis" mesh_file="package://f1tenth_description/meshes/lower_chassis.stl"-->
-<!--                    x="0.31" y="0.183" z="0.03" mass="0.08">-->
-<!--        <origin xyz="0 0 0" rpy="0 0 0"/>-->
-<!--    </xacro:box_link>-->
+    <xacro:box_link name="lower_chassis" mesh_file="package://f1tenth_description/meshes/chassis_base.stl"
+                    x="0.31" y="0.183" z="0.03" mass="0.08">
+        <origin xyz="0 0 0" rpy="0 0 ${-pi/2}"/>
+    </xacro:box_link>
 
 </robot>

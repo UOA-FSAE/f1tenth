@@ -63,7 +63,8 @@
 
             <visual>
                 <geometry>
-                    <mesh filename="${mesh_file}"/>
+                    <mesh filename="${mesh_file}"
+                        scale="0.001 0.001 0.001"/>
                 </geometry>
 
                 <xacro:insert_block name="origin" />
@@ -71,7 +72,8 @@
 
             <collision>
                 <geometry>
-                    <mesh filename="${mesh_file}"/>
+                    <mesh filename="${mesh_file}"
+                        scale="0.001 0.001 0.001"/>
                 </geometry>
 
                 <xacro:insert_block name="origin" />
@@ -137,7 +139,8 @@
         <link name="${name}">
             <visual>
                 <geometry>
-                    <mesh filename="${mesh_file}"/>
+                    <mesh filename="${mesh_file}"
+                        scale="0.001 0.001 0.001"/>
                 </geometry>
 
                 <xacro:insert_block name="origin" />
@@ -145,7 +148,8 @@
 
             <collision>
                 <geometry>
-                    <mesh filename="${mesh_file}"/>
+                    <mesh filename="${mesh_file}"
+                        scale="0.001 0.001 0.001"/>
                 </geometry>
 
                 <xacro:insert_block name="origin" />
