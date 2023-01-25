@@ -3,12 +3,16 @@ from launch.substitutions import LaunchConfiguration
 from launch.actions import ExecuteProcess, DeclareLaunchArgument, OpaqueFunction
 
 
+# TODO: add documentation
+
 def spawn_func(context, *args, **kwargs):
     world = LaunchConfiguration('world').perform(context)
     name = LaunchConfiguration('name').perform(context)
     topic = LaunchConfiguration('topic').perform(context)
 
     cmd_exec = 'ros2 run ros_gz_sim create'
+
+    # TODO: create topic bridges for the created model
 
     return [ExecuteProcess(
         cmd=[cmd_exec,

@@ -10,7 +10,7 @@ from launch_ros.actions import Node
 
 import xacro
 
-# TODO: create documentation for this
+# TODO: add documentation
 
 
 def generate_launch_description():
