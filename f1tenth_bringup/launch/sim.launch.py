@@ -1,6 +1,6 @@
 import os
 
-from ament_index_python.packages import get_package_share_directory, get_package_prefix
+from ament_index_python.packages import get_package_share_directory
 
 from launch import LaunchDescription
 from launch.actions import IncludeLaunchDescription
@@ -8,19 +8,10 @@ from launch.launch_description_sources import PythonLaunchDescriptionSource
 
 
 # TODO: add documentation
+# TODO: clean up code
 
 def generate_launch_description():
     pkg_ros_gz_sim = get_package_share_directory('ros_gz_sim')
-    pkg_f1tenth_bringup = get_package_share_directory('f1tenth_bringup')
-    pkg_f1tenth_description = get_package_share_directory('f1tenth_description')
-
-    rsp = IncludeLaunchDescription(
-        launch_description_source=PythonLaunchDescriptionSource(
-            os.path.join(pkg_f1tenth_bringup, 'rsp.launch.py')),
-        launch_arguments={
-            'use_sim_time': 'true',
-        }.items(),
-    )
 
     # TODO: add f1tenth_description to resource path for gazebo
     gz_sim = IncludeLaunchDescription(
@@ -32,6 +23,5 @@ def generate_launch_description():
     )
 
     return LaunchDescription([
-        rsp,
         gz_sim,
     ])

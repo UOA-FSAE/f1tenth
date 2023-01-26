@@ -10,8 +10,9 @@ from launch_ros.actions import Node
 
 import xacro
 
-# TODO: add documentation
 
+# TODO: add documentation
+# TODO: clean up code
 
 def generate_launch_description():
     # ---------- RSP ----------
@@ -27,7 +28,17 @@ def generate_launch_description():
     xacro_file = os.path.join(description_pkg_path, 'urdf', 'robot.urdf.xacro')
     robot_description = xacro.process_file(xacro_file)
 
-    rsp_params = {'robot_description': robot_description.toxml(), 'use_sim_time': use_sim_time}
+    frame_prefix = LaunchConfiguration('frame_prefix')
+    frame_prefix_arg = DeclareLaunchArgument(
+        name='frame_prefix',
+        default_value='',
+        description='Frame prefix'
+    )
+
+    rsp_params = {'robot_description': robot_description.toxml(),
+                  'use_sim_time': use_sim_time,
+                  'frame_prefix': frame_prefix}
+
     robot_state_publisher = Node(
         package='robot_state_publisher',
         executable='robot_state_publisher',
@@ -70,6 +81,7 @@ def generate_launch_description():
         use_sim_time_arg,
         use_jsp_gui_arg,
         use_rviz_arg,
+        frame_prefix_arg,
 
         # Nodes
         robot_state_publisher,
