@@ -13,15 +13,33 @@ from launch_ros.actions import Node
 # TODO: clean up code
 
 def spawn_func(context, *args, **kwargs):
+    pkg_f1tenth_bringup = get_package_share_directory('f1tenth_bringup')
+
     world = LaunchConfiguration('world').perform(context)
     name = LaunchConfiguration('name').perform(context)
     topic = LaunchConfiguration('topic').perform(context)
 
-    cmd_exec = 'ros2 run ros_gz_sim create'
-
-    # TODO: create topic bridges for the created model
+    rsp = IncludeLaunchDescription(
+        launch_description_source=PythonLaunchDescriptionSource(
+            os.path.join(pkg_f1tenth_bringup, 'rsp.launch.py')),
+        launch_arguments={
+            'use_sim_time': 'true',
+            'frame_prefix': f'{name}/',
+        }.items(),
+    )
 
     return [
+        rsp,
+
+        Node(
+            package='ros_gz_sim', executable='create',
+            arguments=[
+                '-world', world,
+                '-name', name,
+                '-topic', topic,
+            ],
+            output='screen'
+        ),
 
         Node(
             package='ros_gz_bridge',
@@ -37,17 +55,8 @@ def spawn_func(context, *args, **kwargs):
                 (f'/world/{world}/model/{name}/joint_state', '/joint_states'),
                 (f'/model/{name}/tf', '/tf'),
             ]
-        ),
-
-        ExecuteProcess(
-            cmd=[cmd_exec,
-                 '-world', f"'{world}'",
-                 '-name', f"'{name}'",
-                 '-topic', f"'{topic}'",
-                 ],
-            output='screen',
-            shell=True,
-        )]
+        )
+    ]
 
 
 def generate_launch_description():
@@ -67,23 +76,10 @@ def generate_launch_description():
         description='specifies xml topic to spawn from'
     )
 
-    pkg_f1tenth_bringup = get_package_share_directory('f1tenth_bringup')
-
-    # TODO: move this into spawn_func and put / after name in frame_prefix
-    rsp = IncludeLaunchDescription(
-        launch_description_source=PythonLaunchDescriptionSource(
-            os.path.join(pkg_f1tenth_bringup, 'rsp.launch.py')),
-        launch_arguments={
-            'use_sim_time': 'true',
-        }.items(),
-    )
-
     return LaunchDescription([
         world_arg,
         name_arg,
         topic_arg,
-
-        rsp,
 
         OpaqueFunction(function=spawn_func)
     ])
