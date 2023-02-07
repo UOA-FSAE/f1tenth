@@ -20,6 +20,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
+            'environment = f1tenth_control.environment:main',
+            'entity = f1tenth_control.entity:main',
         ],
     },
 )
