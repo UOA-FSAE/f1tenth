@@ -51,6 +51,10 @@ class Entity(Node):
         self.odom = odom
 
     def spawn(self):
+        """
+        This function needs to be called before interacting with the entity, This function spawns the entity in the
+        simulation and allows for communication between the two
+        """
         self.spawn_process = start_launch_description_process(
             launch_description_spawn_entity,
             {'name': self.name,
@@ -59,6 +63,12 @@ class Entity(Node):
         )
 
     def set_velocity(self, linear: float, angular: float):
+        """
+        Sets target velocity for the entity.
+
+        :param linear: m/s
+        :param angular: rad
+        """
         velocity_msg = Twist()
         velocity_msg.angular.z = angular
         velocity_msg.linear.x = linear
@@ -66,6 +76,10 @@ class Entity(Node):
         self.pub_topic_cmd_vel.publish(velocity_msg)
 
     def get_env(self):
+        """
+        Returns all observations of the environment that it currently has.
+        :return: nav_msgs.msg.Odometry
+        """
         return self.odom
 
 
