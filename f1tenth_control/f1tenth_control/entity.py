@@ -13,20 +13,24 @@ from .launch_descriptions import launch_description_spawn_entity, start_launch_d
 from geometry_msgs.msg import Twist
 from nav_msgs.msg import Odometry
 
+from rclpy.executors import SingleThreadedExecutor
+from threading import Thread
+
+import random
+import time
+import subprocess
+
 
 class Entity(Node):
     def __init__(self, name: str, world: str, urdf_robot_topic: str = '/robot_description'):
         super().__init__(name)
 
-        self.name = name
+        self.name = str(name)
         self.world = world
         self.urdf_robot_topic = urdf_robot_topic
 
         self.spawn_process = None
         self.odom = None
-
-        self.tf_buffer = Buffer()
-        self.tf_listener = TransformListener(self.tf_buffer, self, spin_thread=True)
 
         self.pub_topic_cmd_vel = self.create_publisher(
             Twist,
@@ -47,14 +51,21 @@ class Entity(Node):
         )
         self.message_filter.registerCallback(self.message_filter_callback)
 
+    def spin_up(self):
+        self.executor_thread = SingleThreadedExecutor()
+
+        def run_func():
+            self.executor_thread.add_node(self)
+            self.executor_thread.spin()
+            self.executor_thread.remove_node(self)
+
+        self.dedicated_listener_thread = Thread(target=run_func)
+        self.dedicated_listener_thread.start()
+
     def message_filter_callback(self, odom: Odometry):
         self.odom = odom
 
-    def spawn(self):
-        """
-        This function needs to be called before interacting with the entity, This function spawns the entity in the
-        simulation and allows for communication between the two
-        """
+    def spawn(self, spin_thread=True):
         self.spawn_process = start_launch_description_process(
             launch_description_spawn_entity,
             {'name': self.name,
@@ -62,25 +73,61 @@ class Entity(Node):
              'topic': self.urdf_robot_topic}
         )
 
-    def set_velocity(self, linear: float, angular: float):
-        """
-        Sets target velocity for the entity.
+        if spin_thread:
+            self.spin_up()
 
-        :param linear: m/s
-        :param angular: rad
-        """
+    def move_entity(self, x=None, y=None, z=0.5):
+
+        if not x:
+            x = self.spawn_pos[0]
+
+        if not y:
+            y = self.spawn_pos[1]
+
+        x = float(x)
+        y = float(y)
+        z = float(z)
+
+        subprocess.Popen(
+            # gz service - s /world/empty/set_pose - -reqtype gz.msgs.Pose - -reptype gz.msgs.Boolean - -timeout 1000
+            # - -req 'name: "blue_car", position: {x: 0, y: 0, z: 0.5}'
+            [f"gz service -s /world/{self.world}/set_pose --reqtype gz.msgs.Pose --reptype gz.msgs.Boolean --timeout 1000 --req 'name: \"{self.name}\", position: {{x: {str(x)}, y: {str(y)}, z:{str(z)}}}'"],
+            shell=True
+        )
+
+    def set_velocity(self, linear: float, angular: float):
         velocity_msg = Twist()
         velocity_msg.angular.z = angular
         velocity_msg.linear.x = linear
 
         self.pub_topic_cmd_vel.publish(velocity_msg)
 
-    def get_env(self):
-        """
-        Returns all observations of the environment that it currently has.
-        :return: nav_msgs.msg.Odometry
-        """
+    def step(self, action):
+        linear_vel, angular_vel = action
+
+        linear_vel = float(linear_vel)
+        angular_vel = float(angular_vel)
+
+        self.set_velocity(linear=linear_vel, angular=angular_vel)
+
+        time.sleep(0.5)
+
+        odom_state = self.get_odom()
+
         return self.odom
+
+    def get_odom(self):
+        snap_shot: Odometry = self.odom
+
+        pose = snap_shot.pose.pose
+        position = pose.position
+        orientation = pose.orientation
+
+        twist = snap_shot.twist.twist
+        lin_vel = twist.linear
+        ang_vel = twist.angular
+
+        return [position.x, position.y, orientation.z, orientation.w, lin_vel.x, ang_vel.z]
 
 
 def main(args=None):

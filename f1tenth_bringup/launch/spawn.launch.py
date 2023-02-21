@@ -47,13 +47,14 @@ def spawn_func(context, *args, **kwargs):
             arguments=[
                 f'/model/{name}/cmd_vel@geometry_msgs/msg/Twist@gz.msgs.Twist',
                 f'/model/{name}/odometry@nav_msgs/msg/Odometry@gz.msgs.Odometry',
-                f'/model/{name}/tf@tf2_msgs/msg/TFMessage@gz.msgs.Pose_V',
+                # f'/model/{name}/tf@tf2_msgs/msg/TFMessage@gz.msgs.Pose_V',
                 f'/world/{world}/model/{name}/joint_state@sensor_msgs/msg/JointState@gz.msgs.Model',
                 f'/model/{name}/pose@geometry_msgs/msg/Pose@gz.msgs.Pose',
+                
             ],
             remappings=[
                 (f'/world/{world}/model/{name}/joint_state', '/joint_states'),
-                (f'/model/{name}/tf', '/tf'),
+                # (f'/model/{name}/tf', '/tf'),
             ]
         )
     ]

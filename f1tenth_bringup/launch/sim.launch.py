@@ -6,6 +6,8 @@ from launch import LaunchDescription
 from launch.actions import IncludeLaunchDescription
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 
+from launch_ros.actions import Node
+
 
 # TODO: add documentation
 
@@ -22,6 +24,15 @@ def generate_launch_description():
         }.items()
     )
 
+    gz_bridge = Node(
+        package='ros_gz_bridge',
+        executable='parameter_bridge',
+        arguments=[
+            f'/world/empty/control@ros_gz_interfaces/srv/ControlWorld',
+        ]
+    )
+
     return LaunchDescription([
         gz_sim,
+        gz_bridge
     ])

@@ -19,6 +19,8 @@ setup(
         (os.path.join('share', package_name, 'gazebo'), glob('gazebo/*')),
         (os.path.join('share', package_name, 'worlds'), glob('worlds/*')),
         (os.path.join('share', package_name, 'config'), glob('config/*')),
+        (os.path.join('share', package_name, 'sdf'), glob('sdf/*')),
+
     ],
     install_requires=['setuptools'],
     zip_safe=True,
