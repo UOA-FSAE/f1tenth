@@ -12,6 +12,9 @@
   <test_depend>ament_pep257</test_depend>
   <test_depend>python3-pytest</test_depend>
 
+  <depend>f1tenth_bringup</depend>
+  <depend>f1tenth_description</depend>
+
   <depend>ros_gz</depend>
 
   <export>

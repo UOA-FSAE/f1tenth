@@ -16,10 +16,20 @@ class Environment(Node):
     def __init__(self):
         super().__init__('Environment_Node')
 
-        self.world_file = world_file
-        self.world_name = world_name
+        self.world_file = None
+        self.world_name = None
+        self.reset_pos = []
+
+        self.list_of_entities = []
 
         self.env_process = None
+
+    def config_world(self, world_file: str, world_name: str, reset_pos: list[(float, float)] = None):
+        self.world_file = world_file
+        self.world_name = world_name
+        self.reset_pos = reset_pos
+
+        return self
 
     def build(self):
         if not self.world_file and not self.world_name:
@@ -70,11 +80,11 @@ class Environment(Node):
 def main(args=None):
     rclpy.init(args=args)
 
-    environment = Environment(
+    environment = Environment()
+    environment.config_world(
         world_file='empty.sdf',
-        world_name='empty',
+        world_name='empty'
     )
-
     environment.build()
     rclpy.spin(environment)
 

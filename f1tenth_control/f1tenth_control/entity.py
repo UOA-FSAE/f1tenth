@@ -5,9 +5,6 @@ from rclpy.node import Node
 
 from message_filters import Subscriber, ApproximateTimeSynchronizer
 
-from tf2_ros.buffer import Buffer
-from tf2_ros.transform_listener import TransformListener
-
 from .launch_descriptions import launch_description_spawn_entity, start_launch_description_process
 
 from geometry_msgs.msg import Twist
@@ -22,11 +19,12 @@ import subprocess
 
 
 class Entity(Node):
-    def __init__(self, name: str, world: str, urdf_robot_topic: str = '/robot_description'):
+    def __init__(self, name: str, world: str, spawn_pos, urdf_robot_topic: str = '/robot_description'):
         super().__init__(name)
 
         self.name = str(name)
         self.world = world
+        self.spawn_pos = spawn_pos
         self.urdf_robot_topic = urdf_robot_topic
 
         self.spawn_process = None
@@ -76,7 +74,7 @@ class Entity(Node):
         if spin_thread:
             self.spin_up()
 
-    def move_entity(self, x=None, y=None, z=0.5):
+    def move_entity(self, x=None, y=None, z=0):
 
         if not x:
             x = self.spawn_pos[0]
@@ -102,16 +100,7 @@ class Entity(Node):
 
         self.pub_topic_cmd_vel.publish(velocity_msg)
 
-    def step(self, action):
-        linear_vel, angular_vel = action
-
-        linear_vel = float(linear_vel)
-        angular_vel = float(angular_vel)
-
-        self.set_velocity(linear=linear_vel, angular=angular_vel)
-
-        time.sleep(0.5)
-
+    def get_data(self):
         return self.odom
 
 
