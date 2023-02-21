@@ -112,22 +112,7 @@ class Entity(Node):
 
         time.sleep(0.5)
 
-        odom_state = self.get_odom()
-
         return self.odom
-
-    def get_odom(self):
-        snap_shot: Odometry = self.odom
-
-        pose = snap_shot.pose.pose
-        position = pose.position
-        orientation = pose.orientation
-
-        twist = snap_shot.twist.twist
-        lin_vel = twist.linear
-        ang_vel = twist.angular
-
-        return [position.x, position.y, orientation.z, orientation.w, lin_vel.x, ang_vel.z]
 
 
 def main(args=None):
