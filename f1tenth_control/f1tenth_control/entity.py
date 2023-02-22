@@ -7,7 +7,7 @@ from message_filters import Subscriber, ApproximateTimeSynchronizer
 
 from .launch_descriptions import launch_description_spawn_entity, start_launch_description_process
 
-from geometry_msgs.msg import Twist
+from geometry_msgs.msg import Twist, Pose
 from nav_msgs.msg import Odometry
 
 from rclpy.executors import SingleThreadedExecutor
@@ -45,9 +45,12 @@ class Entity(Node):
         self.message_filter = ApproximateTimeSynchronizer(
             [self.sub_mf_odom],
             10,
-            0.1
+            0.1,
         )
         self.message_filter.registerCallback(self.message_filter_callback)
+
+    def pose_setter(self, odom: Pose):
+        self.odom = odom
 
     def spin_up(self):
         self.executor_thread = SingleThreadedExecutor()

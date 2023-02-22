@@ -25,6 +25,8 @@
 
             <min_acceleration>-1</min_acceleration>
             <max_acceleration>3</max_acceleration>
+
+            <odom_topic>_</odom_topic>
         </plugin>
     </gazebo>
 
