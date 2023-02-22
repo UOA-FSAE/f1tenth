@@ -11,6 +11,7 @@
 
     <!-- Gazebo stuff -->
     <xacro:include filename="$(find f1tenth_description)/gazebo/ackermann.gazebo.xacro" />
+    <xacro:include filename="$(find f1tenth_description)/gazebo/odometry.gazebo.xacro" />
     <xacro:include filename="$(find f1tenth_description)/gazebo/jsp.gazebo.xacro" />
     <xacro:include filename="$(find f1tenth_description)/gazebo/pose.gazebo.xacro" />
 
