@@ -62,5 +62,13 @@
         <origin xyz="-0.155 0.09 0.055" rpy="0 0 0"/>
     </joint>
 
+    <!-- Sensor Joints -->
+    <joint name="hokuyo_10lx_lidar_joint" type="fixed">
+        <child link="hokuyo_10lx_lidar_link" />
+        <parent link="base_link" />
+
+        <origin xyz="0.1 0 0.15" rpy="0 0 0"/>
+    </joint>
+
 
 </robot>

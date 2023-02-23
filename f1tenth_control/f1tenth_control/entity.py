@@ -9,6 +9,7 @@ from .launch_descriptions import launch_description_spawn_entity, start_launch_d
 
 from geometry_msgs.msg import Twist, Pose
 from nav_msgs.msg import Odometry
+from sensor_msgs.msg import LaserScan
 
 from rclpy.executors import SingleThreadedExecutor
 from threading import Thread
@@ -29,6 +30,7 @@ class Entity(Node):
 
         self.spawn_process = None
         self.odom = None
+        self.lidar = None
 
         self.pub_topic_cmd_vel = self.create_publisher(
             Twist,
@@ -41,9 +43,14 @@ class Entity(Node):
             Odometry,
             f'/model/{self.name}/odometry',
         )
+        self.sub_mf_lidar = Subscriber(
+            self,
+            LaserScan,
+            f'/lidar',
+        )
 
         self.message_filter = ApproximateTimeSynchronizer(
-            [self.sub_mf_odom],
+            [self.sub_mf_odom, self.sub_mf_lidar],
             10,
             0.1,
         )
@@ -63,8 +70,9 @@ class Entity(Node):
         self.dedicated_listener_thread = Thread(target=run_func)
         self.dedicated_listener_thread.start()
 
-    def message_filter_callback(self, odom: Odometry):
+    def message_filter_callback(self, odom: Odometry, lidar: LaserScan):
         self.odom = odom
+        self.lidar = lidar
 
     def spawn(self, spin_thread=True):
         self.spawn_process = start_launch_description_process(
@@ -104,7 +112,7 @@ class Entity(Node):
         self.pub_topic_cmd_vel.publish(velocity_msg)
 
     def get_data(self):
-        return self.odom
+        return [self.odom, self.lidar]
 
 
 def main(args=None):
