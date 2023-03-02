@@ -1,1 +1,5 @@
 
+[submodule "vesc"]
+	path = vesc
+	url = https://github.com/sbgisen/vesc
+	branch = humble-devel

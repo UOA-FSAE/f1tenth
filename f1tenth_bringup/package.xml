@@ -13,6 +13,10 @@
   <test_depend>python3-pytest</test_depend>
 
   <depend>ros_gz</depend>
+  <depend>ackermann_msgs</depend>
+  <depend>urg_node</depend>
+  <depend>vesc</depend>
+  <depend>std_msgs</depend>
 
   <export>
     <build_type>ament_python</build_type>
