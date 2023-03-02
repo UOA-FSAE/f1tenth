@@ -20,6 +20,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
+            'throttle_interpolator = f1tenth_control.throttle_interpolator:main',
             'environment = f1tenth_control.environment:main',
             'entity = f1tenth_control.entity:main',
         ],

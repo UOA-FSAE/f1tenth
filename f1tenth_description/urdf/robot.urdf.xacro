@@ -10,8 +10,7 @@
     <xacro:include filename="$(find f1tenth_description)/urdf/links.xacro" />
     <xacro:include filename="$(find f1tenth_description)/urdf/joints.xacro" />
 
-<!--    &lt;!&ndash; Gazebo stuff &ndash;&gt;-->
-<!--    <xacro:include filename="$(find f1tenth_description)/gazebo/lidar.gazebo.xacro" />-->
+    <!-- Gazebo stuff -->
     <xacro:include filename="$(find f1tenth_description)/gazebo/ackermann.gazebo.xacro" />
     <xacro:include filename="$(find f1tenth_description)/gazebo/odometry.gazebo.xacro" />
     <xacro:include filename="$(find f1tenth_description)/gazebo/jsp.gazebo.xacro" />
