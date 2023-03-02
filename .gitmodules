@@ -2,7 +2,3 @@
 	path = transport_drivers
 	url = https://github.com/ros-drivers/transport_drivers
 	branch = humble
-[submodule "vesc"]
-	path = vesc
-	url = https://github.com/sbgisen/vesc
-	branch = humble-devel
