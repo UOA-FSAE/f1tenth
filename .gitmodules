@@ -1,6 +1,3 @@
 [submodule "hardware_drivers/transport_drivers"]
 	path = hardware_drivers/transport_drivers
 	url = https://github.com/ros-drivers/transport_drivers.git
-[submodule "hardware_drivers/vesc"]
-	path = hardware_drivers/vesc
-	url = https://github.com/pokusew/vesc.git
