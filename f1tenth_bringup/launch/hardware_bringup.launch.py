@@ -10,6 +10,12 @@ from launch.substitutions import PathJoinSubstitution, TextSubstitution
 
 
 def generate_launch_description():
+    '''
+    inputs:
+        vesc_config : overide
+        sensor_config: overide
+        topic_config: lables all topics
+    '''
 
     # launch vesc
     vesc_launch = IncludeLaunchDescription(
