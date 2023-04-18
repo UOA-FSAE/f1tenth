@@ -1,6 +1,7 @@
 import os
 
 from launch_ros.substitutions import FindPackageShare
+from launch_ros.actions import Node
 from launch_xml.launch_description_sources import XMLLaunchDescriptionSource
 
 from launch import LaunchDescription
@@ -48,8 +49,15 @@ def generate_launch_description():
         ])
     )
 
+    # joystick
+    joy = Node(
+        package="joy",
+        executable="joy_node",
+    )
+
     return LaunchDescription([
         ackermann_to_vesc_launch,
         vesc_to_odom_launch,
         vesc_launch,
+        joy,
     ])
