@@ -46,7 +46,7 @@ class SimulationServices(Node):
 
         # Reset Service --------------------------------------
         self.reset_client = self.create_client(
-            WorldControl,
+            ControlWorld,
             f'world/{self.world_name}/control',
         )
 
@@ -203,3 +203,5 @@ class SimulationServices(Node):
 
         self.set_pose_future = self.set_pose_client.call_async(request)
         rclpy.spin_until_future_complete(self, self.set_pose_future)
+
+        return self.set_pose_future.result()
