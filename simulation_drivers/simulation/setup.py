@@ -23,7 +23,7 @@ setup(
     entry_points={
         'console_scripts': [
             'gz_services = simulation.gz_services:main',
-            'simulation_services = simulation.SimulationServices:main',
+            'simulation_services = simulation.simulation_services:main',
         ],
     },
 )

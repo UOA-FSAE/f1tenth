@@ -21,6 +21,7 @@ def generate_launch_description():
         Node(
         package='ros_gz_bridge',
         executable='parameter_bridge',
+        output='screen',
         arguments=[
             f'/world/empty/control@ros_gz_interfaces/srv/ControlWorld',
             f'/world/empty/create@ros_gz_interfaces/srv/SpawnEntity',

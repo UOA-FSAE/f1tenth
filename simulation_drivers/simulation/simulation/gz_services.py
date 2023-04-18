@@ -1,6 +1,6 @@
 import sys
 import rclpy
-from .SimulationServices import SimulationServices
+from .simulation_services import SimulationServices
 
 def main():
     rclpy.init()
@@ -9,6 +9,8 @@ def main():
     
     print('Hi from simulation.')
     print(sys.argv)
+
+    rclpy.spin(services)
 
 
 if __name__ == '__main__':
