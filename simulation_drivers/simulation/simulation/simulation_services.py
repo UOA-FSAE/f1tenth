@@ -3,9 +3,9 @@ import rclpy
 from rclpy.node import Node
 from rclpy.task import Future
 
-from ros_gz_interfaces.srv import SpawnEntity, DeleteEntity, SetEntityPose
-from ros_gz_interfaces.msg import Entity, EntityFactory
-
+from ros_gz_interfaces.srv import SpawnEntity, DeleteEntity, SetEntityPose, ControlWorld
+from ros_gz_interfaces.msg import Entity, EntityFactory, WorldControl, WorldReset
+from geometry_msgs.msg import Pose, Point, Quaternion
 
 class SimulationServices(Node):
     def __init__(self, world_name):
@@ -13,6 +13,7 @@ class SimulationServices(Node):
         
         self.world_name = world_name
 
+        # Spawn Service --------------------------------------
         self.spawn_client = self.create_client(
             SpawnEntity,
             f'world/{self.world_name}/create',
@@ -38,10 +39,22 @@ class SimulationServices(Node):
             SetEntityPose,
             f'world/{self.world_name}/set_pose',
         )
-        while not self.delete_client.wait_for_service(timeout_sec=1.0):
-            self.get_logger().info('delete service not available, waiting again...')
+        while not self.set_pose_client.wait_for_service(timeout_sec=1.0):
+            self.get_logger().info('set_pose service not available, waiting again...')
 
-        self.delete_future = Future()
+        self.set_pose_future = Future()
+
+        # Reset Service --------------------------------------
+        self.reset_client = self.create_client(
+            WorldControl,
+            f'world/{self.world_name}/control',
+        )
+
+        while not self.reset_client.wait_for_service(timeout_sec=1.0):
+            self.get_logger().info('reset service not available, waiting again...')
+
+        self.reset_future = Future()
+
 
     def spawn(self, *, sdf=None, sdf_filename=None, name='cool_car', pose=None, orientation=None):
         """
@@ -89,10 +102,10 @@ class SimulationServices(Node):
         request.entity_factory.name = name
 
         while not self.spawn_client.wait_for_service(timeout_sec=1.0):
-            self.env.get_logger().info('spawn service not available, waiting again...')
+            self.get_logger().info('spawn service not available, waiting again...')
 
         self.spawn_future = self.spawn_client.call_async(request)
-        rclpy.spin_until_future_complete(self.env, self.spawn_future)
+        rclpy.spin_until_future_complete(self, self.spawn_future)
 
         return self.spawn_future.result()
     
@@ -120,11 +133,73 @@ class SimulationServices(Node):
         request.entity.type = entity_type
 
         while not self.delete_client.wait_for_service(timeout_sec=1.0):
-            self.env.get_logger().info('delete service not available, waiting again...')
+            self.get_logger().info('delete service not available, waiting again...')
 
         self.delete_future = self.delete_client.call_async(request)
-        rclpy.spin_until_future_complete(self.env, self.delete_future)
+        rclpy.spin_until_future_complete(self, self.delete_future)
 
         return self.delete_future.result()
     
+    def reset(self):
+        """
+        Calls Reset Gazebo Service
+        """
+
+        request = ControlWorld.Request()
+        request.world_control = WorldControl()
+        request.world_control.reset = WorldReset()
+        request.world_control.reset.all = True
+
+        while not self.reset_client.wait_for_service(timeout_sec=1.0):
+            self.get_logger().info('delete service not available, waiting again...')
+
+        self.reset_future = self.reset_client.call_async(request)
+        rclpy.spin_until_future_complete(self, self.reset_future)
+
+        return self.reset_future.result()
     
+    def set_pose(self, name, position=None, orientation=None, id=None, type=2):
+        """
+        Calls the SetEntityPose gazebo service
+        :param entity_type: int: type of entity using the following scheme
+            NONE      = 0
+            LIGHT     = 1
+            MODEL     = 2
+            LINK      = 3
+            VISUAL    = 4
+            COLLISION = 5
+            SENSOR    = 6
+            JOINT     = 7
+        """
+        if position is None:
+            position = [0, 0, 0]
+
+        if orientation is None:
+            orientation = [0, 0, 0, 0]
+
+        x, y, z = position
+        q_x, q_y, q_z, q_w = orientation
+
+        request = SetEntityPose.Request()
+
+        request.entity = Entity()
+        request.entity.name = name
+        request.entity.type = type
+        
+        request.pose = Pose()
+        request.pose.position = Point()
+        request.pose.position.x = x
+        request.pose.position.y = y
+        request.pose.position.z = z
+
+        request.pose.orientation = Quaternion()
+        request.pose.orientation.x = q_x
+        request.pose.orientation.y = q_y
+        request.pose.orientation.z = q_z
+        request.pose.orientation.w = q_w
+
+        while not self.set_pose_client.wait_for_service(timeout_sec=1.0):
+            self.get_logger().info('set_pose service not available, waiting again...')
+
+        self.set_pose_future = self.set_pose_client.call_async(request)
+        rclpy.spin_until_future_complete(self, self.set_pose_future)
