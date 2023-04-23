@@ -188,16 +188,19 @@ class SimulationServices(Node):
         
         request.pose = Pose()
         request.pose.position = Point()
-        request.pose.position.x = x
-        request.pose.position.y = y
-        request.pose.position.z = z
+        
+        request.pose.position.x = float(x)
+        request.pose.position.y = float(y)
+        request.pose.position.z = float(z)
 
         request.pose.orientation = Quaternion()
-        request.pose.orientation.x = q_x
-        request.pose.orientation.y = q_y
-        request.pose.orientation.z = q_z
-        request.pose.orientation.w = q_w
+        request.pose.orientation.x = float(q_x)
+        request.pose.orientation.y = float(q_y)
+        request.pose.orientation.z = float(q_z)
+        request.pose.orientation.w = float(q_w)
 
+        
+        
         while not self.set_pose_client.wait_for_service(timeout_sec=1.0):
             self.get_logger().info('set_pose service not available, waiting again...')
 
