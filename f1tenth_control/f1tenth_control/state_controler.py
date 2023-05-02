@@ -1,8 +1,14 @@
 # create simple ros2 subscriber and publisher
+import random
+import os
+from multiprocessing import Process
 
 import rclpy
 from rclpy.node import Node
+from launch import LaunchService, LaunchDescription
+
 from f1tenth_msgs.msg import Available, Configure
+from f1tenth_bringup.hardware_bringup import generate_launch_description
 
 from statemachine import StateMachine, State
 
@@ -38,6 +44,10 @@ class StateController(Node, StateMachine):
     def __init__(self):
         super().__init__('state_controller')
 
+        # Create random ID
+        self.id = random.randint(0, 1000)
+        self.name: str | None = None
+
     # Transitions
     @unconfigured.enter
     def on_enter_unconfigured(self):
@@ -59,27 +69,61 @@ class StateController(Node, StateMachine):
         )
 
         # Publishers
-        self.pub_car_id = self.create_publisher(
+        self.pub_available_cars = self.create_publisher(
             Configure,
-            '/car_id',
+            '/available_cars',
             10
         )
-
 
     @unconfigured.exit
     def on_exit_unconfigured(self):
         # Destroys subscribers and publishers
         self.destroy_subscription(self.sub_available_cars)
         self.destroy_subscription(self.sub_configure_car)
-        self.destroy_publisher(self.pub_car_id)
+        self.destroy_publisher(self.pub_available_cars)
 
     @active.enter
     def on_enter_active(self):
-        pass
+        # spinup ld on sperate thread
+        ls = LaunchService()
+
+        ls.include_launch_description(
+            generate_launch_description()  # TODO: pass in config
+        )
+
+        self.process = Process(target=ls.run)
+        self.process.daemon = True
+        self.process.start()
 
     @active.exit
     def on_exit_active(self):
-        pass
+        # Closes ld
+        self.process.terminate()
+
+    # Callbacks
+    def available_cars_callback(self, msg):
+        """
+        When sent Available.msg on "/available_cars" topic it will reply with its ID
+        """
+        if msg.get_available_cars:
+            self.get_logger().info("StateController: Publishing car ID")
+            self.pub_car_id.publish(Configure(id=self.id))
+
+    def configure_car_callback(self, msg):
+        """
+        When sent Configure.msg on "/configure_car" topic it will change to active state and config as
+        the message says and transition to active state
+        """
+        if msg.id != self.id:
+            return
+
+        self.get_logger().info("StateController: Received configure car message")
+        self.get_logger().info("StateController: Transitioning to active state")
+
+        self.name = msg.name
+        self.configure()
+
+        self.get_logger().info("StateController: Transitioned to active state")
 
 
 def main(args=None):
