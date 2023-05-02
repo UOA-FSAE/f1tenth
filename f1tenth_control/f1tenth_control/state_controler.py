@@ -6,9 +6,12 @@ from multiprocessing import Process
 import rclpy
 from rclpy.node import Node
 from launch import LaunchService, LaunchDescription
+from launch.actions import IncludeLaunchDescription
+from launch.launch_description_sources import PythonLaunchDescriptionSource
+
+from ament_index_python import get_package_share_directory
 
 from f1tenth_msgs.msg import Available, Configure
-from f1tenth_bringup.hardware_bringup import generate_launch_description
 
 from statemachine import StateMachine, State
 
@@ -86,9 +89,18 @@ class StateController(Node, StateMachine):
     def on_enter_active(self):
         # spinup ld on sperate thread
         ls = LaunchService()
+        pkg_f1tenth_bringup = get_package_share_directory('f1tenth_bringup')
 
         ls.include_launch_description(
-            generate_launch_description()  # TODO: pass in config
+            LaunchDescription([
+                IncludeLaunchDescription(
+                    launch_description_source=PythonLaunchDescriptionSource(
+                        os.path.join(pkg_f1tenth_bringup, 'launch', 'hardware_bringup.launch.py')),
+                    launch_arguments={
+                        "name": self.name,
+                    }
+                )
+            ])
         )
 
         self.process = Process(target=ls.run)
