@@ -23,6 +23,7 @@ def generate_launch_description():
         arguments=[
             f'/model/f1tenth/odometry@nav_msgs/msg/Odometry@gz.msgs.Odometry',
             f'/model/f1tenth/cmd_vel@geometry_msgs/msg/Twist@gz.msgs.Twist',
+            f'/lidar@sensor_msgs/msg/LaserScan@gz.msgs.LaserScan', # TODO: find way to publish lidar to dynamic topic => of form /model/<name>/lidar
         ]
     )
         # f'/model/{name}/cmd_vel@geometry_msgs/msg/Twist@gz.msgs.Twist',
