@@ -87,11 +87,40 @@ class StateController(Node, StateMachine):
 
     @active.enter
     def on_enter_active(self):
-        # spinup ld on sperate thread
-        ls = LaunchService()
+        """Callback method to handle the transition into the 'active' state.
+
+        This method is called when entering the 'active' state. It logs the state
+        transition, initializes the hardware-related nodes using a LaunchService object,
+        and starts a separate process to run the LaunchService.
+        """
+        self.log_state_transition()
+        ls = self.create_launch_service()
+        self.launch_hardware_bringup(ls)
+        self.process = self.run_launch_service_in_new_process(ls)
+        self.process.start()
+
+    @active.exit
+    def on_exit_active(self):
+        """Callback method to handle the transition out of the 'active' state.
+
+        This method is called when exiting the 'active' state. It terminates the
+        hardware-related nodes launched in a separate process.
+        """
+        self.process.terminate()
+
+    def log_state_transition(self):
+        """Logs the state transition."""
+        self.get_logger().info("StateController: Entering active state")
+
+    def create_launch_service(self):
+        """Creates and returns a new LaunchService object."""
+        return LaunchService()
+
+    def launch_hardware_bringup(self, launch_service):
+        """Launches the 'hardware_bringup.launch.py' file using the provided LaunchService."""
         pkg_f1tenth_bringup = get_package_share_directory('f1tenth_bringup')
 
-        ls.include_launch_description(
+        launch_service.include_launch_description(
             LaunchDescription([
                 IncludeLaunchDescription(
                     launch_description_source=PythonLaunchDescriptionSource(
@@ -103,14 +132,11 @@ class StateController(Node, StateMachine):
             ])
         )
 
-        self.process = Process(target=ls.run)
-        self.process.daemon = True
-        self.process.start()
-
-    @active.exit
-    def on_exit_active(self):
-        # Closes ld
-        self.process.terminate()
+    def run_launch_service_in_new_process(self, launch_service):
+        """Runs the provided LaunchService in a new process and returns the process."""
+        process = Process(target=launch_service.run)
+        process.daemon = True
+        return process
 
     # Callbacks
     def available_cars_callback(self, msg):
