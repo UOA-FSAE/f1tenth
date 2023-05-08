@@ -12,7 +12,6 @@ import xacro
 
 
 def spawn_func(context, *args, **kwargs):
-    pkg_f1tenth_bringup = get_package_share_directory('f1tenth_bringup')
 
     description_pkg_path = os.path.join(get_package_share_directory('f1tenth_description'))
     xacro_file = os.path.join(description_pkg_path, 'urdf', 'robot.urdf.xacro')
@@ -20,7 +19,6 @@ def spawn_func(context, *args, **kwargs):
 
     world = LaunchConfiguration('world').perform(context)
     name = LaunchConfiguration('name').perform(context)
-    topic = LaunchConfiguration('topic').perform(context)
 
     return [
         Node(
@@ -39,7 +37,7 @@ def spawn_func(context, *args, **kwargs):
             arguments=[
                 '-world', world,
                 '-name', name,
-                '-topic', topic,
+                '-topic', "/robot_description",
             ],
             output='screen'
         ),
@@ -57,6 +55,9 @@ def spawn_func(context, *args, **kwargs):
 
             ],
             remappings=[
+                (f'/model/{name}/cmd_vel', f'/{name}/cmd_vel'),
+                (f'/model/{name}/pose', f'/{name}/pose'),
+                (f'/model/{name}/odometry', f'/{name}/odometry'),
                 (f'/world/{world}/model/{name}/joint_state', '/joint_states'),
                 # (f'/model/{name}/tf', '/tf'),
             ]
@@ -75,16 +76,9 @@ def generate_launch_description():
         description='name of robot spawned'
     )
 
-    topic_arg = DeclareLaunchArgument(
-        name='topic',
-        default_value='/robot_description',
-        description='specifies xml topic to spawn from'
-    )
-
     return LaunchDescription([
         world_arg,
         name_arg,
-        topic_arg,
 
         OpaqueFunction(function=spawn_func)
     ])
