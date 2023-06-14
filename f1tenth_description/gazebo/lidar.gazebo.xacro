@@ -12,7 +12,7 @@
       <sensor name='gpu_lidar' type='gpu_lidar'>
           <pose relative_to='hokuyo_10lx_lidar_link'>0 0 0 0 0 0</pose>
           <topic>lidar</topic>
-          <update_rate>100</update_rate>
+          <update_rate>5</update_rate>
           <ray>
                 <scan>
                   <horizontal>
