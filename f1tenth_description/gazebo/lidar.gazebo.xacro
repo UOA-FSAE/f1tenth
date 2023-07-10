@@ -9,9 +9,10 @@
     </gazebo>
 
     <gazebo reference="hokuyo_10lx_lidar_link">
-      <sensor name='gpu_lidar' type='gpu_lidar'>
+      <sensor name='hokuyo_10lx_lidar_link' type='gpu_lidar'>
           <pose relative_to='hokuyo_10lx_lidar_link'>0 0 0 0 0 0</pose>
-          <topic>lidar</topic>
+          <topic>${robot_name}/scan</topic>
+          <gz_frame_id>${robot_name}hokuyo_10lx_lidar_link</gz_frame_id>
           <update_rate>5</update_rate>
           <ray>
                 <scan>
