@@ -69,10 +69,18 @@ def spawn_func(context, *args, **kwargs):
             executable='ekf_node',
             name='ekf_filter_node',
             output='screen',
-            parameters=[os.path.join(description_pkg_path, 'config/ekf.yaml')],
+            parameters=[os.path.join(description_pkg_path, 'config/ekf.yaml'),
+                        {"use_sim_time": True}],
         ),
 
-        
+        Node(
+            package='slam_toolbox',
+            executable='async_slam_toolbox_node',
+            name='slam_toolbox',
+            output='screen',
+            parameters=[ os.path.join(description_pkg_path, 'config', 'slam_toolbox.yaml'),
+                        {"use_sim_time": True}],
+        )
 
     ]
 
