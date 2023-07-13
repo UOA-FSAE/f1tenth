@@ -28,7 +28,8 @@ def spawn_func(context, *args, **kwargs):
                 'robot_description': xacro.process_file(xacro_file, mappings={"robot_name": {name}}).toxml(),
                 'use_sim_time': False,
                 'frame_prefix': name
-            }]
+            }],
+            namespace=name
         ),
 
         Node(
@@ -36,7 +37,7 @@ def spawn_func(context, *args, **kwargs):
             arguments=[
                 '-world', world,
                 '-name', name,
-                '-topic', "/robot_description",
+                '-topic', f"/{name}/robot_description",
             ],
             output='screen'
         ),
@@ -48,7 +49,7 @@ def spawn_func(context, *args, **kwargs):
                 f'/model/{name}/cmd_vel@geometry_msgs/msg/Twist@gz.msgs.Twist',
                 f'/{name}/scan@sensor_msgs/msg/LaserScan@gz.msgs.LaserScan',
                 f'/model/{name}/odometry@nav_msgs/msg/Odometry@gz.msgs.Odometry',
-                f'/model/f1tenth/odometry_with_covariance@nav_msgs/msg/Odometry@gz.msgs.OdometryWithCovariance',
+                f'/model/{name}/odometry_with_covariance@nav_msgs/msg/Odometry@gz.msgs.OdometryWithCovariance',
                 # f'/model/{name}/tf@tf2_msgs/msg/TFMessage@gz.msgs.Pose_V',
                 f'/world/{world}/model/{name}/joint_state@sensor_msgs/msg/JointState@gz.msgs.Model',
                 f'/model/{name}/pose@geometry_msgs/msg/Pose@gz.msgs.Pose',
@@ -59,7 +60,7 @@ def spawn_func(context, *args, **kwargs):
                 (f'/model/{name}/pose', f'/{name}/pose'),
                 (f'/model/{name}/odometry', f'/{name}/odometry'),
                 (f'/model/{name}/odometry_with_covariance', f'/{name}/odometry_with_covariance'),
-                (f'/world/{world}/model/{name}/joint_state', '/joint_states'),
+                (f'/world/{world}/model/{name}/joint_state', f'/{name}/joint_states'),
                 # (f'/model/{name}/tf', '/tf'),
             ]
         ),
