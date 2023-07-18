@@ -26,7 +26,6 @@ def spawn_func(context, *args, **kwargs):
             output='screen',
             parameters=[{
                 'robot_description': xacro.process_file(xacro_file, mappings={"robot_name": {name}}).toxml(),
-                'use_sim_time': False,
                 'frame_prefix': name
             }],
             namespace=name
@@ -65,23 +64,23 @@ def spawn_func(context, *args, **kwargs):
             ]
         ),
 
-        Node(
-            package='robot_localization',
-            executable='ekf_node',
-            name='ekf_filter_node',
-            output='screen',
-            parameters=[os.path.join(description_pkg_path, 'config/ekf.yaml'),
-                        {"use_sim_time": True}],
-        ),
+        # Node(
+        #     package='robot_localization',
+        #     executable='ekf_node',
+        #     name='ekf_filter_node',
+        #     output='screen',
+        #     parameters=[os.path.join(description_pkg_path, 'config/ekf.yaml'),
+        #                 {"use_sim_time": True}],
+        # ),
 
-        Node(
-            package='slam_toolbox',
-            executable='async_slam_toolbox_node',
-            name='slam_toolbox',
-            output='screen',
-            parameters=[ os.path.join(description_pkg_path, 'config', 'slam_toolbox.yaml'),
-                        {"use_sim_time": True}],
-        )
+        # Node(
+        #     package='slam_toolbox',
+        #     executable='async_slam_toolbox_node',
+        #     name='slam_toolbox',
+        #     output='screen',
+        #     parameters=[ os.path.join(description_pkg_path, 'config', 'slam_toolbox.yaml'),
+        #                 {"use_sim_time": True}],
+        # )
 
     ]
 
