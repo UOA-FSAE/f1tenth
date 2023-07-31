@@ -19,9 +19,9 @@ def spawn_func(context, *args, **kwargs):
     world = LaunchConfiguration('world').perform(context)
     name = LaunchConfiguration('name').perform(context)
 
-    # x = LaunchConfiguration('x').perform(context)
-    # y = LaunchConfiguration('y').perform(context)
-    # z = LaunchConfiguration('z').perform(context)
+    x = LaunchConfiguration('x').perform(context)
+    y = LaunchConfiguration('y').perform(context)
+    z = LaunchConfiguration('z').perform(context)
 
     return [
         Node(
@@ -41,9 +41,9 @@ def spawn_func(context, *args, **kwargs):
                 '-world', world,
                 '-name', name,
                 '-topic', f"/{name}/robot_description",
-                # '-x', x,
-                # '-y', y,
-                # '-z', z,
+                '-x', x,
+                '-y', y,
+                '-z', z,
             ],
             output='screen'
         ),
