@@ -2,7 +2,9 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
     <!-- Global -->
-    <xacro:property name="robot_name" value="f1tenth" />
+    <xacro:arg name="robot_name" default="f1tenth"/>
+    <xacro:property name="robot_name" value="$(arg robot_name)" />
+    <!-- <xacro:property name="params_path" value="$(arg params_path)"/> -->
 
     <!-- Wheels -->
     <xacro:property name="wheel_diameter" value="0.11" />
