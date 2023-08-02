@@ -23,6 +23,10 @@ def spawn_func(context, *args, **kwargs):
     y = LaunchConfiguration('y').perform(context)
     z = LaunchConfiguration('z').perform(context)
 
+    R = LaunchConfiguration('R').perform(context)
+    P = LaunchConfiguration('P').perform(context)
+    Y = LaunchConfiguration('Y').perform(context)
+
     return [
         Node(
             package='robot_state_publisher',
@@ -32,6 +36,10 @@ def spawn_func(context, *args, **kwargs):
                 'robot_description': xacro.process_file(xacro_file, mappings={"robot_name": name}).toxml(),
                 'frame_prefix': name
             }],
+            remappings=[
+                ('/tf', f'/{name}/tf'),
+                ('/tf_static', f'/{name}/tf_static'),
+            ],
             namespace=name
         ),
 
@@ -44,6 +52,9 @@ def spawn_func(context, *args, **kwargs):
                 '-x', x,
                 '-y', y,
                 '-z', z,
+                '-R', R,
+                '-P', P,
+                '-Y', Y
             ],
             output='screen'
         ),
@@ -106,38 +117,38 @@ def generate_launch_description():
     x = DeclareLaunchArgument(
         name='x',
         description='x position of robot',
-        default_value='0.0'
+        default_value='3.0'
     )
 
     y = DeclareLaunchArgument(
         name='y',
         description='y position of robot',
-        default_value='0.0'
+        default_value='3.0'
     )
 
     z = DeclareLaunchArgument(
         name='z',
         description='z position of robot',
-        default_value='0.1'
+        default_value='3.0'
     )
 
-    # R = DeclareLaunchArgument(
-    #     name='R',
-    #     description='roll of robot',
-    #     default_value='0'
-    # )
+    R = DeclareLaunchArgument(
+        name='R',
+        description='roll of robot',
+        default_value='0.0'
+    )
 
-    # P = DeclareLaunchArgument(
-    #     name='P',
-    #     description='pitch of robot',
-    #     default_value='0'
-    # )
+    P = DeclareLaunchArgument(
+        name='P',
+        description='pitch of robot',
+        default_value='0.0'
+    )
 
-    # Y = DeclareLaunchArgument(
-    #     name='Y',
-    #     description='yaw of robot',
-    #     default_value='0'
-    # )
+    Y = DeclareLaunchArgument(
+        name='Y',
+        description='yaw of robot',
+        default_value='0.0'
+    )
 
     return LaunchDescription([
         world_arg,
@@ -145,5 +156,8 @@ def generate_launch_description():
         x,
         y,
         z,
+        R,
+        P,
+        Y,
         OpaqueFunction(function=spawn_func)
     ])

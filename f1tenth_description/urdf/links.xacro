@@ -42,6 +42,7 @@
     </xacro:box_link>
 
     <!-- Sensor links -->
+
     <xacro:cylinder_link_nomesh name="hokuyo_10lx_lidar_link"
                     radius="0.05" width="0.08" mass="0.05">
       <origin xyz="0 0 0" rpy="0 0 0"/>
