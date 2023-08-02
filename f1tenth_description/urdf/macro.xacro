@@ -146,14 +146,14 @@
                 <xacro:insert_block name="origin" />
             </visual>
 
-            <collision>
+            <!-- <collision>
                 <geometry>
                     <mesh filename="${mesh_file}"
                         scale="0.001 0.001 0.001"/>
                 </geometry>
 
                 <xacro:insert_block name="origin" />
-            </collision>
+            </collision> -->
 
             <xacro:inertial_box mass="${mass}" x="${x}" y="${y}" z="${z}">
                 <xacro:insert_block name="origin" />
