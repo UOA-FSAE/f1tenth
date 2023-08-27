@@ -72,8 +72,7 @@
 
             <collision>
                 <geometry>
-                    <mesh filename="${mesh_file}"
-                        scale="0.001 0.001 0.001"/>
+                    <cylinder length="${width}" radius="${radius}" />
                 </geometry>
 
                 <xacro:insert_block name="origin" />
