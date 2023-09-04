@@ -2,7 +2,9 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/hardware_drivers/ackermann_mux" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/hardware_drivers/transport_drivers" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/hardware_drivers/urg_node" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/hardware_drivers/vesc" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/simulation_drivers/ros_gz" vcs="Git" />
   </component>
