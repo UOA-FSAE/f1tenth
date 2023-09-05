@@ -3,6 +3,7 @@
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/hardware_drivers/ackermann_mux" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/hardware_drivers/teleop_tools" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/hardware_drivers/transport_drivers" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/hardware_drivers/urg_node" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/hardware_drivers/vesc" vcs="Git" />
