@@ -73,7 +73,8 @@ def generate_launch_description():
 		package='vesc_ackermann',
 		executable='vesc_to_odom_node',
 		name='vesc_to_odom_node',
-		parameters=[LaunchConfiguration('vesc_config')]
+		parameters=[LaunchConfiguration('vesc_config')],
+		remappings=[('odom', 'f1tenth/odometry')]
 	)
 	vesc_driver_node = Node(
 		package='vesc_driver',
@@ -85,7 +86,8 @@ def generate_launch_description():
 		package='urg_node',
 		executable='urg_node_driver',
 		name='urg_node',
-		parameters=[LaunchConfiguration('sensors_config')]
+		parameters=[LaunchConfiguration('sensors_config')],
+		remappings=[('scan', 'f1tenth/scan')]
 	)
 	ackermann_mux_node = Node(
 		package='ackermann_mux',

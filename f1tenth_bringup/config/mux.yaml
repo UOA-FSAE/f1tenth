@@ -2,7 +2,7 @@ ackermann_mux:
   ros__parameters:
     topics:
       navigation:
-        topic   : drive
+        topic   : f1tenth/drive
         timeout : 0.2
         priority: 10
       joystick:
