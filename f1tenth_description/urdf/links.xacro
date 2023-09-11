@@ -37,9 +37,13 @@
 
     <!-- Chassis -->
     <xacro:box_link name="lower_chassis" mesh_file="package://f1tenth_description/meshes/chassis_base.stl"
-                    x="0.31" y="0.183" z="0.03" mass="0.08">
+                    x="0.03" y="0.183" z="0.31 " mass="0.08">
         <origin xyz="0 0 0" rpy="0 0 ${-pi/2}"/>
     </xacro:box_link>
+
+    <xacro:box_link_nomesh name='box_visual' x="0.03 " y="0.183" z="0.31" mass="0.001">
+        <origin xyz="0 -0.0915 0" rpy="0 0 0"/>
+    </xacro:box_link_nomesh >
 
     <!-- Sensor links -->
 

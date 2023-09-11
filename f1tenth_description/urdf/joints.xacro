@@ -55,6 +55,13 @@
     </joint>
 
     <!-- Chassis Joints-->
+    <joint name="base_link_to_box" type="fixed">
+        <child link="box_visual" />
+        <parent link="base_link" />
+
+        <origin xyz="-0.1554 0.09 0.2" rpy="0 0 0"/>
+    </joint>
+
     <joint name="base_link_to_lower_chassis" type="fixed">
         <child link="lower_chassis" />
         <parent link="base_link" />

@@ -160,4 +160,29 @@
         </link>
     </xacro:macro>
 
+  <xacro:macro name="box_link_nomesh" params="name x y z mass *origin">
+        <link name="${name}">
+
+            <visual>
+                <geometry>
+                    <box size='${x} ${y} ${z}' />
+                </geometry>
+
+                <xacro:insert_block name="origin" />
+            </visual>
+
+            <collision>
+                <geometry>
+                    <box size='${x} ${y} ${z}' />
+                </geometry>
+
+                <xacro:insert_block name="origin" />
+            </collision>
+
+
+            <xacro:inertial_box mass="${mass}" x="${x}" y="${y}" z="${z}">
+                <xacro:insert_block name="origin" />
+            </xacro:inertial_box>
+        </link>
+    </xacro:macro>
 </robot>
