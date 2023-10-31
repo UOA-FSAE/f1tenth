@@ -14,9 +14,10 @@
 
   <depend>vesc</depend>
   <depend>joy</depend>
+  <depend>joy_teleop</depend>
+  <depend>ackermann_mux</depend>
   <depend>xacro</depend>
   <depend>robot_state_publisher</depend>
-  <depend>teleop_tools</depend>
   <depend>ros_gz</depend>
 
   <exec_depend>robot_localization</exec_depend>
