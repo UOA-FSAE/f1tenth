@@ -13,3 +13,6 @@
 [submodule "hardware_drivers/teleop_tools"]
 	path = hardware_drivers/teleop_tools
 	url = https://github.com/f1tenth/teleop_tools.git
+[submodule "hardware_drivers/realsense-ros"]
+	path = hardware_drivers/realsense-ros
+	url = https://github.com/rl16432/realsense-ros.git
