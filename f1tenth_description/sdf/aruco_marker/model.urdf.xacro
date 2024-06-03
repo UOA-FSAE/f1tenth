@@ -29,7 +29,7 @@
             <ambient>1 1 1 1</ambient>
             <pbr>
               <metal>
-                <albedo_map>$(find f1tenth_description)/sdf/aruco_marker/materials/textures/marker.png</albedo_map>
+                <albedo_map>$(find f1tenth_description)/sdf/aruco_marker/materials/textures/marker_padded.png</albedo_map>
                 <metalness>0</metalness>
               </metal>
             </pbr>
