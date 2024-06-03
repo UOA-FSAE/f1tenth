@@ -59,4 +59,10 @@
     </link>
         
 
+    <!-- AruCo marker -->
+    <xacro:if value="${add_aruco}">
+        <xacro:include filename="$(find f1tenth_description)/sdf/aruco_marker/model.urdf.xacro" />
+        <xacro:aruco_marker xyz="-0.20 0 0.183" rpy="0 0 0"/>
+    </xacro:if>
+
 </robot>

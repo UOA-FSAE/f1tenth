@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <!-- RealSense dependency -->
+  <xacro:include filename="$(find realsense2_description)/urdf/_d435.urdf.xacro" />
+  <xacro:if value="${add_camera}">
+    <xacro:sensor_d435 gazebo="true" name="d435" parent="base_link"
+      use_nominal_extrinsics="true">
+      <origin xyz="0 0 0.3" rpy="0 0 0" />
+    </xacro:sensor_d435>
+  </xacro:if>
+</robot>
