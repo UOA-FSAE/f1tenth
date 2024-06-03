@@ -8,8 +8,8 @@
 
         <axis xyz="0 0 1" />
         <limit lower="-0.6" upper="+0.6"
-               velocity="1.0" effort="25" />
-        <origin xyz="0.1575 0.1025 0.055" rpy="0 0 0"/>
+            velocity="1.0" effort="25" />
+        <origin xyz="0.1575 0.1025 0.055" rpy="0 0 0" />
     </joint>
 
     <joint name="front_right_wheel_steering_joint" type="revolute">
@@ -18,8 +18,8 @@
 
         <axis xyz="0 0 1" />
         <limit lower="-0.6" upper="+0.6"
-               velocity="1.0" effort="25" />
-        <origin xyz="0.1575 -0.1025 0.055" rpy="0 0 0"/>
+            velocity="1.0" effort="25" />
+        <origin xyz="0.1575 -0.1025 0.055" rpy="0 0 0" />
     </joint>
 
     <!-- Drive joints -->
@@ -43,7 +43,7 @@
         <parent link="base_link" />
 
         <axis xyz="0 1 0" />
-        <origin xyz="-0.1575 0.1025 0.055" rpy="0 0 0"/>
+        <origin xyz="-0.1575 0.1025 0.055" rpy="0 0 0" />
     </joint>
 
     <joint name="rear_right_wheel_joint" type="continuous">
@@ -51,7 +51,7 @@
         <parent link="base_link" />
 
         <axis xyz="0 1 0" />
-        <origin xyz="-0.1575 -0.1025 0.055" rpy="0 0 0"/>
+        <origin xyz="-0.1575 -0.1025 0.055" rpy="0 0 0" />
     </joint>
 
     <!-- Chassis Joints-->
@@ -59,14 +59,14 @@
         <child link="box_visual" />
         <parent link="base_link" />
 
-        <origin xyz="-0.1554 0.09 0.2" rpy="0 0 0"/>
+        <origin xyz="-0.1554 0.09 0.2" rpy="0 0 0" />
     </joint>
 
     <joint name="base_link_to_lower_chassis" type="fixed">
         <child link="lower_chassis" />
         <parent link="base_link" />
 
-        <origin xyz="-0.155 0.09 0.055" rpy="0 0 0"/>
+        <origin xyz="-0.155 0.09 0.055" rpy="0 0 0" />
     </joint>
 
     <!-- Sensor Joints -->
@@ -74,8 +74,16 @@
         <child link="hokuyo_10lx_lidar_link" />
         <parent link="base_link" />
 
-        <origin xyz="0.1 0 0.15" rpy="0 0 0"/>
+        <origin xyz="0.1 0 0.15" rpy="0 0 0" />
     </joint>
 
-
+    <xacro:if value="${add_aruco}">
+        <gazebo>
+            <joint name="aruco_marker_joint" type="fixed">
+                <pose relative_to="box_visual">0 0 0 0 0 0</pose>
+                <child>aruco_link</child>
+                <parent>box_visual</parent>
+            </joint>
+        </gazebo>
+    </xacro:if>
 </robot>
