@@ -83,6 +83,7 @@
         <origin xyz="0 0 0" rpy="0 0 0"/>
     </joint>
 
+    <!-- Add AruCo marker  -->
     <xacro:if value="${add_aruco}">
         <gazebo>
             <joint name="aruco_marker_joint" type="fixed">
