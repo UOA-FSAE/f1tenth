@@ -3,7 +3,7 @@
   <!-- RealSense dependency -->
   <xacro:include filename="$(find realsense2_description)/urdf/_d435.urdf.xacro" />
   <xacro:if value="${add_camera}">
-    <xacro:sensor_d435 gazebo="true" name="d435" parent="base_link"
+    <xacro:sensor_d435 gazebo="true" name="${camera_name}" parent="base_link"
       use_nominal_extrinsics="true" 
       enable_infra1="false" enable_infra2="false" enable_color="true" enable_depth="true" 
       color_width="1920" color_height="1080" color_fps="30"

@@ -4,6 +4,8 @@
     <!-- Global -->
     <xacro:arg name="robot_name" default="f1tenth"/>
     <xacro:property name="robot_name" value="$(arg robot_name)" />
+    <xacro:arg name="camera_name" default="d435"/>
+    <xacro:property name="camera_name" value="$(arg camera_name)" />
     <xacro:arg name="add_camera" default="false"/>
     <xacro:property name="add_camera" value="$(arg add_camera)" />
     <xacro:arg name="add_aruco" default="false"/>
