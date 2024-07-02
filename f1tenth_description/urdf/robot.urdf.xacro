@@ -11,6 +11,7 @@
     <xacro:include filename="$(find f1tenth_description)/urdf/links.xacro" />
     <xacro:include filename="$(find f1tenth_description)/urdf/joints.xacro" />
     <xacro:include filename="$(find f1tenth_description)/urdf/d435.xacro" />
+    <!-- <xacro:include filename="$(find f1tenth_description)/urdf/zed2.xacro" /> -->
 
     <!-- Gazebo stuff -->
     <xacro:include filename="$(find f1tenth_description)/gazebo/ackermann.gazebo.xacro" />

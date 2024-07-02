@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <!-- RealSense dependency -->
+  <xacro:include filename="$(find zed_wrapper)/urdf/zed_macro.urdf.xacro" />
+  <xacro:if value="$(arg add_camera)">
+    <xacro:zed_camera parent="base_link"
+      gazebo="true" robot_name="$(arg robot_name)"
+      name="$(arg stereo_camera_name)" model="zed2"
+      custom_baseline="false" enable_gnss="false">
+      <origin xyz="0 0 0.3" rpy="0 0 0" />
+    </xacro:zed_camera>
+  </xacro:if>
+</robot>
