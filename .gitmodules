@@ -16,3 +16,6 @@
 [submodule "hardware_drivers/realsense-ros"]
 	path = hardware_drivers/realsense-ros
 	url = https://github.com/rl16432/realsense-ros.git
+[submodule "hardware_drivers/zed-ros2-wrapper"]
+	path = hardware_drivers/zed-ros2-wrapper
+	url = https://github.com/rl16432/zed-ros2-wrapper.git
