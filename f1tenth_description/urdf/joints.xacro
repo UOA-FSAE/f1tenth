@@ -87,7 +87,7 @@
     <xacro:if value="${add_aruco}">
         <gazebo>
             <joint name="aruco_marker_joint" type="fixed">
-                <pose relative_to="box_visual">0 0 0 0 0 0</pose>
+                <pose relative_to="box_visual">0 0 0 0 0 0</pose> <!-- This doesn't do anything -->
                 <child>aruco_link</child>
                 <parent>box_visual</parent>
             </joint>
