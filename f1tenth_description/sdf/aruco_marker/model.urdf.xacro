@@ -27,9 +27,17 @@
             <diffuse>1 1 1 1</diffuse>
             <specular>0.4 0.4 0.4 1</specular>
             <ambient>1 1 1 1</ambient>
+            <!-- <emissive>0.1 0.1 0.1 1</emissive> -->
             <pbr>
               <metal>
-                <albedo_map>$(find f1tenth_description)/sdf/aruco_marker/materials/textures/marker_padded.png</albedo_map>
+                <albedo_map>$(find f1tenth_description)/sdf/aruco_marker/materials/textures/marker.png</albedo_map>
+                <!-- <roughness_map>$(find f1tenth_description)/sdf/aruco_marker/materials/textures/marker_padded.png</roughness_map> -->
+                <!-- <metalness_map>$(find f1tenth_description)/sdf/aruco_marker/materials/textures/marker_padded.png</metalness_map> -->
+                <!-- <environment_map>$(find f1tenth_description)/sdf/aruco_marker/materials/textures/marker_padded.png</environment_map> -->
+                <!-- <normal_map>$(find f1tenth_description)/sdf/aruco_marker/materials/textures/marker_padded.png</normal_map> -->
+                <!-- <ambient_occlusion_map>$(find f1tenth_description)/sdf/aruco_marker/materials/textures/marker_padded.png</ambient_occlusion_map> -->
+                <!-- <light_map>$(find f1tenth_description)/sdf/aruco_marker/materials/textures/marker_padded.png</light_map> -->
+                <!-- <emissive_map>$(find f1tenth_description)/sdf/aruco_marker/materials/textures/marker_padded.png</emissive_map> -->
                 <metalness>0</metalness>
               </metal>
             </pbr>

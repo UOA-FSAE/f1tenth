@@ -45,8 +45,19 @@
         <origin xyz="0 -0.0915 0" rpy="0 0 0"/>
     </xacro:box_link_nomesh >
 
-    <!-- Sensor links -->
+    <!-- Give box visual white color -->
+    <gazebo reference="box_visual">
+        <visual>
+            <material>
+                <emissive>1 1 1 1</emissive>
+                <diffuse>1 1 1 1</diffuse>
+                <specular>1 1 1 1</specular>
+                <ambient>1 1 1 1</ambient>
+            </material>
+        </visual>
+    </gazebo>
 
+    <!-- Sensor links -->
     <xacro:cylinder_link_nomesh name="hokuyo_10lx_lidar_link"
                     radius="0.05" width="0.08" mass="0.05">
       <origin xyz="0 0 0" rpy="0 0 0"/>
@@ -55,7 +66,7 @@
     <!-- AruCo marker -->
     <xacro:if value="${add_aruco}">
         <xacro:include filename="$(find f1tenth_description)/sdf/aruco_marker/model.urdf.xacro" />
-        <xacro:aruco_marker xyz="-0.20 0 0.183" rpy="0 0 0"/>
+        <xacro:aruco_marker xyz="-0.1705 0 0.183" rpy="0 0 0"/>
     </xacro:if>
 
 </robot>
