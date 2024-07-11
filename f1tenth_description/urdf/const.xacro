@@ -12,7 +12,8 @@
     <xacro:property name="add_camera" value="$(arg add_camera)" />
     <xacro:arg name="add_aruco" default="false"/>
     <xacro:property name="add_aruco" value="$(arg add_aruco)" />
-    <!-- <xacro:property name="params_path" value="$(arg params_path)"/> -->
+    <xacro:arg name="use_stereo" default="false"/>
+    <xacro:property name="use_stereo" value="$(arg use_stereo)" />
 
     <!-- Wheels -->
     <xacro:property name="wheel_diameter" value="0.11" />
