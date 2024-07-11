@@ -5,9 +5,10 @@
   <xacro:if value="$(arg add_camera)">
     <xacro:zed_camera parent="base_link"
       gazebo="true" robot_name="$(arg robot_name)"
+      image_width="1280" image_height="720" fps="30"
       name="$(arg stereo_camera_name)" model="zed2"
       custom_baseline="false" enable_gnss="false">
-      <origin xyz="0 0 0.3" rpy="0 0 0" />
+      <origin xyz="0 0 0.4" rpy="0 0 0" />
     </xacro:zed_camera>
   </xacro:if>
 </robot>
