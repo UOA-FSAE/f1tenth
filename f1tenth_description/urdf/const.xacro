@@ -4,7 +4,16 @@
     <!-- Global -->
     <xacro:arg name="robot_name" default="f1tenth"/>
     <xacro:property name="robot_name" value="$(arg robot_name)" />
-    <!-- <xacro:property name="params_path" value="$(arg params_path)"/> -->
+    <xacro:arg name="camera_name" default="d435"/>
+    <xacro:property name="camera_name" value="$(arg camera_name)" />
+    <xacro:arg name="stereo_camera_name" default="zed2"/>
+    <xacro:property name="stereo_camera_name" value="$(arg stereo_camera_name)" />
+    <xacro:arg name="add_camera" default="false"/>
+    <xacro:property name="add_camera" value="$(arg add_camera)" />
+    <xacro:arg name="add_aruco" default="false"/>
+    <xacro:property name="add_aruco" value="$(arg add_aruco)" />
+    <xacro:arg name="use_stereo" default="false"/>
+    <xacro:property name="use_stereo" value="$(arg use_stereo)" />
 
     <!-- Wheels -->
     <xacro:property name="wheel_diameter" value="0.11" />
