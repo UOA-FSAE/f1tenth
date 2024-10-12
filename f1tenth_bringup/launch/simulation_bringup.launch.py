@@ -26,6 +26,11 @@ def spawn_func(context, *args, **kwargs):
     R = LaunchConfiguration('R').perform(context)
     P = LaunchConfiguration('P').perform(context)
     Y = LaunchConfiguration('Y').perform(context)
+    
+    add_camera = LaunchConfiguration('add_camera').perform(context)
+    camera_name = LaunchConfiguration('camera_name').perform(context)
+    use_stereo = LaunchConfiguration('use_stereo').perform(context)
+    add_aruco = LaunchConfiguration('add_aruco').perform(context)
 
     return [
         Node(
@@ -33,7 +38,7 @@ def spawn_func(context, *args, **kwargs):
             executable='robot_state_publisher',
             output='screen',
             parameters=[{
-                'robot_description': xacro.process_file(xacro_file, mappings={"robot_name": name}).toxml(),
+                'robot_description': xacro.process_file(xacro_file, mappings={"robot_name": name, "add_camera": add_camera, "camera_name": camera_name, "use_stereo": use_stereo, "add_aruco": add_aruco}).toxml(),
                 'frame_prefix': name
             }],
             remappings=[
@@ -151,6 +156,30 @@ def generate_launch_description():
         default_value='0.0'
     )
 
+    add_camera = DeclareLaunchArgument(
+        name='add_camera',
+        description='add camera to robot',
+        default_value='false'
+    )
+
+    camera_name = DeclareLaunchArgument(
+        name='camera_name',
+        description='name of camera mounted on agent robot',
+        default_value='d435'
+    )
+
+    use_stereo = DeclareLaunchArgument(
+        name='use_stereo',
+        description='use stereo camera or not',
+        default_value='false'
+    )
+
+    add_aruco = DeclareLaunchArgument(
+        name='add_aruco',
+        description='add aruco marker to robot',
+        default_value='false'
+    )
+
     return LaunchDescription([
         world_arg,
         name_arg,
@@ -160,5 +189,9 @@ def generate_launch_description():
         R,
         P,
         Y,
+        add_camera,
+        camera_name,
+        use_stereo,
+        add_aruco,
         OpaqueFunction(function=spawn_func)
     ])
