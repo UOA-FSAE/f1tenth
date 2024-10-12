@@ -67,14 +67,14 @@ def spawn_func(context, *args, **kwargs):
         Node(
             package='ros_gz_bridge',
             executable='parameter_bridge',
+            name=f'{name}_parameter_bridge',
             arguments=[
                 f'/model/{name}/cmd_vel@geometry_msgs/msg/Twist@gz.msgs.Twist',
                 f'/{name}/scan@sensor_msgs/msg/LaserScan@gz.msgs.LaserScan',
                 f'/model/{name}/odometry@nav_msgs/msg/Odometry@gz.msgs.Odometry',
                 f'/model/{name}/odometry_with_covariance@nav_msgs/msg/Odometry@gz.msgs.OdometryWithCovariance',
-                # f'/model/{name}/tf@tf2_msgs/msg/TFMessage@gz.msgs.Pose_V',
+                f"/model/{name}/pose@tf2_msgs/msg/TFMessage[gz.msgs.Pose_V",
                 f'/world/{world}/model/{name}/joint_state@sensor_msgs/msg/JointState@gz.msgs.Model',
-                f'/model/{name}/pose@geometry_msgs/msg/Pose@gz.msgs.Pose',
                 f'/{name}/imu@sensor_msgs/msg/Imu@gz.msgs.IMU'
 
             ],
